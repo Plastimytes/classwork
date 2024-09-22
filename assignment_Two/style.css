@@ -1,0 +1,20 @@
+*{
+    margin:10px;
+    padding:0;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+}
+
+h1{
+
+color: blue;
+font-size : 50px;
+background-color: brown;
+}
+
+p{
+    
+    color: blueviolet;
+    font-size: 20px;
+    background-color: aqua;
+}
+
