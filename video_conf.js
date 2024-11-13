@@ -5,6 +5,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
   .then(stream => {
     localVideo.srcObject = stream;
 
+//Create constant//
     const peerConnection = new RTCPeerConnection();
     stream.getTracks().forEach(track => peerConnection.addTrack(track, stream));
 
