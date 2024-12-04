@@ -22,3 +22,4 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
   .catch(error => {
     console.error('Error accessing media devices:', error);
   });
+//... This probably goes in the server.js file
