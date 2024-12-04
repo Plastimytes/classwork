@@ -17,7 +17,7 @@ navigator.mediaDevices.getUserMedia({ video: true, audio: true })
       remoteVideo.srcObject = event.streams[0];
     };
 
-    // ... (code to create an offer, send it to the other peer, handle incoming offers, etc.)
+    // ..... (code to create an offer, send it to the other peer, handle incoming offers, etc.)
   })
   .catch(error => {
     console.error('Error accessing media devices:', error);
