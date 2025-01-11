@@ -1,4 +1,5 @@
 import math
+
 x= math.floor(2.5) ##Floor can be the same as //. It can also be the closet number below the value
 print(x)
 print()
