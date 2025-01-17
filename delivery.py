@@ -1,1 +1,1 @@
-print("How can we deliver?")
+input("How can we deliver?")
