@@ -1,1 +1,2 @@
-input("How can we deliver?")
+delivery=input("How can we deliver?")
+if delivery<=400000
