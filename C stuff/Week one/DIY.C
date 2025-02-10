@@ -1,4 +1,5 @@
 #include <stdio.h>
+
 void custom();
 int main(void){
     custom();
