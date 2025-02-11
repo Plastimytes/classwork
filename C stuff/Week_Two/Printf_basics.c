@@ -35,9 +35,7 @@ int main(void){
 
     //dot precision
     printf("|||%8.2f|||\n", y);//"8" right aligns but 8 measures and "2" is the number of decimal places
-    printf("|||%-12.3f|||\n", y);//"8"
-    
-
+    printf("|||%-12.3f|||\n", y);//"8" 
     return 0;
 }
 //printf is th function and Hello world is the string
