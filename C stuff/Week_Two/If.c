@@ -1,7 +1,7 @@
 #include <stdio.h>
 
 int main(void){
-    int x = 5;
+    int x = 4;
     if(x == 2)
     {
         printf("x IS EQUAL TO 2 !!\n");
@@ -9,9 +9,13 @@ int main(void){
     else if(x == 3){
         printf("x IS EQUAL TO 3 !!\n");
     }
+    else if(x == 4){
+            printf("x IS EQUAL TO 4 !!\n");    
+    }
     else{
-        printf("x IS not EQUAL TO 2 or 3\n");
+        printf("x IS not EQUAL TO 2,3 or 4\n");
     }
     printf("if done!\n");
     return 0;
 }
+
