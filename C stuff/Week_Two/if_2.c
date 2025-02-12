@@ -1,4 +1,5 @@
 #include <stdio.h>
+//Multiple conditions in if statements
 int main(void){
     int x=5;
  
