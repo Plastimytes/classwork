@@ -5,12 +5,12 @@ int main(void){
     if(x>5) printf("OK!\n");
     else printf("Not OK!\n");
 
-    ///AND operators(&&)
+    ///AND and OR operators(&& and ||)
 
-    int year = 2019;
-    int price = 20000;
+    int year = 23;
+    int price = 22000;
 
-    if (year >= 2019 && price <= 20000)printf("OK!\n");
+    if (year >= 2019 || price <= 20000)printf("OK!\n");
     else printf("Not Ok!\n");
     return 0;
 }
