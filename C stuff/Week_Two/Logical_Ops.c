@@ -12,6 +12,10 @@ int main(void){
 
     if (year >= 2019 || price <= 20000)printf("OK!\n");
     else printf("Not Ok!\n");
+
+    //NOT(!) operator
+    if(!(x>5)) printf("OKAY!\n");
+    else printf("Not OKAY!\n");
     return 0;
 }
 
