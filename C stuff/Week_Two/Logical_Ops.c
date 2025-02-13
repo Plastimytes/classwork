@@ -14,7 +14,7 @@ int main(void){
     else printf("Not Ok!\n");
 
     //NOT(!) operator
-    if(!(x>5)) printf("OKAY!\n");
+    if(!(x<5)) printf("OKAY!\n");
     else printf("Not OKAY!\n");
     return 0;
 }
