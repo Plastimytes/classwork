@@ -3,6 +3,7 @@
 #include <conio.h>
 #include <windows.h>
 
+
 #define WIDTH 20
 #define HEIGHT 10
 
@@ -58,6 +59,7 @@ void Draw() {
     printf("\n");
     printf("Score: %d\n", score);
 }
+
 
 void Input() {
     if (_kbhit()) {
