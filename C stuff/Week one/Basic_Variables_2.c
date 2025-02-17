@@ -1,6 +1,7 @@
 #include <stdio.h>
 
 //Declaring multiple variables
+
 int main(void){
     int position= 10; //variable initialization//Can also be done as int position=10;
     int x, y, z; //declare variables x, y and z ie; three integers
