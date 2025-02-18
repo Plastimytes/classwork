@@ -14,7 +14,9 @@ int main(void)
     {
         printf ("Checkin myarray [%d] = %d\n", i, myarray[i]);
         if (myarray[i]< min) min = myarray[i];//if my array at i is less than min, then make min equal to myarray at i
+        printf("New min found: %d\n", min);
     }
+
     
     printf("Minimum: %d\n", min);
     return 0;
