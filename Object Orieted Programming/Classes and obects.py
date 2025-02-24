@@ -17,6 +17,10 @@ COM2 = Computer2 ()
 Computer.config(COM1)
 Computer2.config(COM2)
 
+#Call method2(Its better) It is the one we normally use
+#You can use the object itself to call the function
+COM1.config()
+COM2.config()
 #X=5
 
 #print(type(X))#The answer is X is an integer
