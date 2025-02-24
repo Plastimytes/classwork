@@ -7,4 +7,6 @@ class Computer:
     print("I5, 16GB, 1TB")
 
 
-COM1 = Computer()#This is a constructor    
+COM1 = Computer()#This...() is a constructor    
+
+print(type(COM1)) #The answer will be <class '__main__.Computer'> meaning this is a class of Computer
