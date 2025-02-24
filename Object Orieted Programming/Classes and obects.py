@@ -9,4 +9,10 @@ class Computer:
 
 COM1 = Computer()#This...() is a constructor    
 
-print(type(COM1)) #The answer will be <class '__main__.Computer'> meaning this is a class of Computer
+#Calling the function/method... Mention the name of the class then .config. If yuo want to use a method this what you do.
+Computer.config(COM1)
+
+#X=5
+
+#print(type(X))#The answer is X is an integer
+#print(type(COM1)) #The answer will be <class '__main__.Computer'> meaning this is a class of Computer
