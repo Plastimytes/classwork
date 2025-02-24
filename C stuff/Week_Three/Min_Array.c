@@ -2,7 +2,6 @@
 
 
 ///  Exact type doesn't really matter cause its almost exactly the same
-
 //Create function
 int find_min(int myarray[], int length);
 int main(void)
