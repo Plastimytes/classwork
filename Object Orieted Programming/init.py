@@ -1,12 +1,14 @@
 ###INTRODUCING VARIABLES (__init__)
 class Computer:
-  def __init__(self):
-    print("This is init")
+  def __init__(self, CPU, RAM):#For the arguements
+    self.CPU = CPU
+    self.RAM = RAM #RAM is an attribute of the class, it's a property of the object. It's a variable that belongs to an object.
   def config(self):#config is the method and self just appears. Self is the object which your passing
-    print("I5, 16GB, 1TB")
+    print("Config is", self.CPU, "and ",self.RAM, "GB")# Its just how you should do it
 
-COM1 = Computer()
-COM2 = Computer()
+#Passing arguements
+COM1 = Computer('I5', 16)
+COM2 = Computer('rYZEN 3', 8)
 
 COM1.config()
 COM2.config()
