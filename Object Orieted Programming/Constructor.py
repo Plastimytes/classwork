@@ -1,12 +1,28 @@
 #Self and constructor
 
 class computer: #If the class is empty it will not work
-   pass
+   def __init__(self):
+     self.name = " Richard"
+     self.age = 21
 
-c1 = computer()
+   def update(self):
+      self.name = "Jane"
+      self.age = 22
+
+c1 = computer()#computer() is the constructor
 #creating another object(it will create different addresses)
 c2 = computer()
 
+#changing the name and age
+c1.name="Elijah"
+c2.age=23
+
+#Updating the object values
+c1.update()
+
 #Creating an id function to print the address of c1
-print(id(c1)) 
-print(id(c2)) 
+print(c1.name) 
+print(c2.name ) 
+print("......")
+print(c1.age) 
+print(c2.age ) 
