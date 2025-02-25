@@ -39,7 +39,8 @@ print("......")
 print(c1.age) 
 print(c2.age ) 
 
-#Self is a pointer / director
+#NB: Self is a pointer / director
+
 #Comparing
 if c1 == c2:
    print("Same")
