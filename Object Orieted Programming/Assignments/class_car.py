@@ -13,6 +13,13 @@ class car:
         
            def config(self):
              print("The account number", self.account_number, "has", self.balance)
+
+           def deposit(self, amount):
+                 if amount > 0:
+                     self.balance += amount
+                     print(f"Deosited {amount}. New balance is {self.balance}")
+                 else:
+                     print("Invalid deposit amount")   
         Call3=bank_account("qdgfr242353", 2300000)
         Call3.config()
     def config(self):
