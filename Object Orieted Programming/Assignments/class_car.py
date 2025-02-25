@@ -28,9 +28,14 @@ class car:
                 else:
                      print("Invalid withdrawal amount or insufficient funds")             
         Call3=bank_account("qdgfr242353", 2300000)
-        Call3.config()
-
         
+        
+        #Deposit money
+        Call3.deposit(100000)
+        #Withdraw money
+        Call3.withdraw(50000)
+        #Check balance
+        Call3.config()
     def config(self):
         print("The car make is ",self.make, "of the model",self.model, "and year", self.year)
 
