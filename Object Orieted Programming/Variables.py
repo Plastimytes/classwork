@@ -4,4 +4,9 @@ class Car:
         self.com = "BMW"
 
 
-        
+c1 = Car()
+c2 = Car()
+
+
+print(c1.mil, c1.com)
+print(c2.mil, c2.com)
