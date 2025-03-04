@@ -9,4 +9,7 @@ class Student:
 
 
 
-#Ojects        
+#Objects(m1, m2 and m3 are instance variables)
+s1 =  Student(34, 67, 43)    
+s2 =  Student(87, 56, 90)   
+
