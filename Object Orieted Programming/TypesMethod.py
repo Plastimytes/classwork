@@ -4,6 +4,10 @@
 class Student:
 
     school = "Jack Mofart"
+    #class methods under accessor(If you want to create a class method we use decorators; @method)
+    @classmethod
+    def info(cls):## cls is used when dealing with class methods
+       return cls.school 
     def __init__(self,m1,m2,m3):
         self.m1 = m1
         self.m2 = m2
@@ -29,9 +33,14 @@ def get_m1(self):
     return self.m1
 
 #class methods under accessor(If you want to create a class method we use decorators; @method)
+@classmethod
 def info(cls):## cls is used when dealing with class methods
     return cls.school    
 
+@staticmethod
+def info():##Static methods to perform an operation related to another
+    print("Student class")
+    
 print (Student.info())
 def get_m1(self,value): 
        self.m1 = value
