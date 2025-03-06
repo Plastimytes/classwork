@@ -40,8 +40,10 @@ def info(cls):## cls is used when dealing with class methods
 @staticmethod
 def info():##Static methods to perform an operation related to another
     print("Student class")
-    
+
 print (Student.info())
 def get_m1(self,value): 
        self.m1 = value
 #Mutator methods(Modifies values/ also called setters)
+
+Student.info()
