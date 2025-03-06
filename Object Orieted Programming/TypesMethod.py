@@ -8,7 +8,8 @@ class Student:
         self.m1 = m1
         self.m2 = m2
         self.m3 = m3
-
+    def ave(self):##Because we are passing self it is an instance method
+        return(self.m1+ self.m2+ self.m3)/3
 
 
 #Objects(m1, m2 and m3 are instance variables)
