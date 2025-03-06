@@ -28,6 +28,10 @@ print(s2.ave())
 def get_m1(self):
     return self.m1
 
+#class methods under accessor
+def info(cls):## cls is used when dealing with class methods
+    return cls.school    
+
 def get_m1(self,value): 
        self.m1 = value
 #Mutator methods(Modifies values/ also called setters)
