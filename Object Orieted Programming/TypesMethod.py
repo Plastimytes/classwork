@@ -17,9 +17,9 @@ s1 =  Student(34, 67, 43)
 s2 =  Student(87, 56, 90)  
 
 ##When passing self (instance methods)
-s1.ave
+s1.ave()
 
 ##Print statement
-print(s1.ave)
+print(s1.ave())
 
 
