@@ -21,5 +21,13 @@ s1.ave()
 
 ##Print statement
 print(s1.ave())
+print(s2.ave())
 
+#Types of methods 
+#Accessor methods(Just for fetching the values / Also called getters)
+def get_m1(self):
+    return self.m1
 
+def get_m1(self,value): 
+       self.m1 = value
+#Mutator methods(Modifies values/ also called setters)
