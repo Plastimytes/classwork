@@ -14,5 +14,9 @@ class Student:
 
 #Objects(m1, m2 and m3 are instance variables)
 s1 =  Student(34, 67, 43)    
-s2 =  Student(87, 56, 90)   
+s2 =  Student(87, 56, 90)  
+
+##When passing self (instance methods)
+s1.avg
+
 
