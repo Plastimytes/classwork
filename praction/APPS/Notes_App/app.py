@@ -19,3 +19,15 @@ class Note(db.Model):
             'title': self.title,
             'content': self.content
         }
+
+@app.before_first_request
+def create_tables():
+    db.create_all()
+
+@app.route('/notes', methods=['POST'])
+def create_note():
+    data = request.get_json()
+    new_note = Note(title=data['title'], content=data['content'])
+    db.session.add(new_note)
+    db.session.commit()
+    return jsonify(new_note.to_dict()), 201
