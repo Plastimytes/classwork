@@ -13,6 +13,7 @@ class Note(db.Model):
     title = db.Column(db.String(100), nullable=False)
     content = db.Column(db.Text, nullable=False)
 
+
     def to_dict(self):
         return {
             'id': self.id,
