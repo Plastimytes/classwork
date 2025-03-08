@@ -31,3 +31,32 @@ def create_note():
     db.session.add(new_note)
     db.session.commit()
     return jsonify(new_note.to_dict()), 201
+
+@app.route('/notes', methods=['GET'])
+def get_notes():
+    notes = Note.query.all()
+    return jsonify([note.to_dict() for note in notes]), 200
+
+@app.route('/notes/<int:id>', methods=['GET'])
+def get_note(id):
+    note = Note.query.get_or_404(id)
+    return jsonify(note.to_dict()), 200
+
+@app.route('/notes/<int:id>', methods=['PUT'])
+def update_note(id):
+    data = request.get_json()
+    note = Note.query.get_or_404(id)
+    note.title = data['title']
+    note.content = data['content']
+    db.session.commit()
+    return jsonify(note.to_dict()), 200
+
+@app.route('/notes/<int:id>', methods=['DELETE'])
+def delete_note(id):
+    note = Note.query.get_or_404(id)
+    db.session.delete(note)
+    db.session.commit()
+    return jsonify({'message': 'Note deleted'}), 204
+
+if __name__ == '__main__':
+    app.run(debug=True)
