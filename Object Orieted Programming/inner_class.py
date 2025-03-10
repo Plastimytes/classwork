@@ -23,8 +23,8 @@ print(s1.name, s1.rollno)
 
 #s1.show()#To give all the values of s1
 
-lap1= s1.lap
-lap2= s2.lap
+lap1= Student.Laptop()
+lap2= Student.Laptop()
 
 print(id(lap1))
 print(id(lap2))
