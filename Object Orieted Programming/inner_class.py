@@ -10,7 +10,7 @@ class Student:
 
     #INNER CLASS
     class Laptop:
-        def __init__(self, brand, model, cpu, ram):
+        def __init__(self):
             self.brand = 'HP'
             self.model = 'Pavilion' 
             self.cpu = "i5"
@@ -21,4 +21,10 @@ s2 =Student('Jane', 3)
 
 print(s1.name, s1.rollno)
 
-s1.show()#To give all the values of s1
+#s1.show()#To give all the values of s1
+
+lap1= s1.lap
+lap2= s2.lap
+
+print(id(lap1))
+print(id(lap2))
