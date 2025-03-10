@@ -30,6 +30,7 @@ print(s1.name, s1.rollno)
 lap1= Student.Laptop()
 lap2= Student.Laptop()
 
+#For ids of that object
 #print(id(lap1))
 #print(id(lap2))
 
