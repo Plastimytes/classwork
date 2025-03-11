@@ -1,4 +1,4 @@
- ##Its exactly what you think it is
+ ##Multiple class inheritance/accessing which is different from multi level
 #Example
 class A:
     def feature1(self):
@@ -7,18 +7,16 @@ class A:
     def feature2(self):
         print("Feature Two is working...\n")
 
-#Inheritance
-#Creating a new class which will be the child class
 
-class B(A):#This shows that B is inheriting the features of A
+class B:
     def feature3(self):
         print("Feature Three is working...")
 
     def feature4(self):
         print("Feature Four is working...\n")
 
-#Multi level inhertance starts here    
-class C(B):#This shows that C is inheriting the features of B and since B is a child of A, C can also inhertance from its grandparent A.
+#Accesssing from multiple classes at once   
+class C(A,B):#This shows that C is inheriting the features of B and since B is a child of A, C can also inhertance from its grandparent A.
     def feature5(self):
         print("Feature Five is working...")
 
@@ -36,12 +34,10 @@ a1.feature2()
 #Objects for class B
 b1 =B()   
 
-b1.feature1()
+b1.feature3()
 b1.feature4()
 
 #Objects for class C
 c1=C() 
 
 c1.feature1()
-#A is the super/Parent class and B is the child/Sub class
-#Note: Class A and B alone are a single level inhertance
