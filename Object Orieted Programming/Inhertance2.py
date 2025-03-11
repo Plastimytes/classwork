@@ -1,4 +1,4 @@
- ##Multiple class inheritance/accessing which is different from multi level
+##Multiple class inheritance/accessing which is different from multi level
 
 class A:
     def feature1(self):
