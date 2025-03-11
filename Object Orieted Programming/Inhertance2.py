@@ -41,3 +41,4 @@ b1.feature4()
 c1=C() 
 
 c1.feature1()
+c1.feature4()
