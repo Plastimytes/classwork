@@ -37,7 +37,7 @@ b1 =B()
 b1.feature3()
 b1.feature4()
 
-#Objects for class C
+#Objects  class C
 c1=C() 
 
 c1.feature1()
