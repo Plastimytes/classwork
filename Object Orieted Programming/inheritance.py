@@ -8,6 +8,15 @@ class A:
         print("Feature Two is working...")
 
 
+#Creating a new class
+class B:
+    def feature3(self):
+        print("Feature Three is working...")
+
+    def feature4(self):
+        print("Feature Four is working...")
+    
+
 #Objects
 a1 =A()    
 
