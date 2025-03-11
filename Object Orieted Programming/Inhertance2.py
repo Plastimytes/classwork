@@ -1,5 +1,5 @@
  ##Multiple class inheritance/accessing which is different from multi level
-#Example
+
 class A:
     def feature1(self):
         print("Feature One is working...")
