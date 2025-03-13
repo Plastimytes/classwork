@@ -11,6 +11,8 @@ class A:
 
 class B(A):#This shows that B is inheriting the features of A
     def __init__(self):
+        #How to access features of the parent class
+        super().__init()
         print("Print in B iNIT")
 
     def feature3(self):
