@@ -1,7 +1,7 @@
 ##Inhertinance Consructors
 class A:
     def feature1(self):
-        print("Feature One is working...")
+        print("Print in A Init...")
 
     def feature2(self):
         print("Feature Two is working...\n")
