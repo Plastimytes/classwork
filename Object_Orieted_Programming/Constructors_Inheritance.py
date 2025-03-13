@@ -10,21 +10,24 @@ class A:
 #Creating a new class which will be the child class
 
 class B(A):#This shows that B is inheriting the features of A
+    def __init__(self):
+        print("Print in B iNIT")
+
     def feature3(self):
-        print("Feature Three is working...")
+        print("Feature three is working...")
 
     def feature4(self):
         print("Feature Four is working...\n")
 
 
-a1 =A()    
+a1 =B()    
 
 #Calling the methods (feature1, feature2)
-a1.feature1()
-a1.feature2()
+#a1.feature1()
+#a1.feature2()
 
 #Objects for class B
-b1 =B()   
+#b1 =B()   
 
-b1.feature3()
-b1.feature4()        
+#b1.feature3()
+#b1.feature4()        
