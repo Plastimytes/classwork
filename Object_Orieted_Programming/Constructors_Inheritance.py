@@ -15,14 +15,13 @@ class B(A):#This shows that B is inheriting the features of A
         super().__init__()#constructor
         print("Print in B iNIT")
 
-    def feature3(self):
-        print("Feature three is working...")
 
-    def feature4(self):
-        print("Feature Four is working...\n")
+class C(A,B):
 
+  def __init__(self):
+    print("Printing c")
 
-a1 =B()    
+a1 =C()    
 
 #Calling the methods (feature1, feature2)
 #a1.feature1()
