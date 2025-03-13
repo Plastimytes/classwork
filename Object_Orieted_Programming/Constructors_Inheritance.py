@@ -16,12 +16,12 @@ class B(A):#This shows that B is inheriting the features of A
         print("Print in B iNIT")
 
 #Issues
-class C(A,B):
+#class C(A,B):
 
-  def __init__(self):
+  #def __init__(self):
     print("Printing c")
 
-a1 =C()    
+a1 =B()    
 
 #Calling the methods (feature1, feature2)
 #a1.feature1()
