@@ -15,7 +15,7 @@ class B(A):#This shows that B is inheriting the features of A
         super().__init__()#constructor
         print("Print in B iNIT")
 
-
+#Issues
 class C(A,B):
 
   def __init__(self):
