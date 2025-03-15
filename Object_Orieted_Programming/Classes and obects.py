@@ -11,7 +11,7 @@ class Computer2:
     print("I4, 6GB, 500gB")
 
 COM1 = Computer()#This...() is a constructor    
-COM2 = Computer2 ()
+COM2 = Computer2()
 
 #Calling the function/method... Mention the name of the class then .config. If yuo want to use a method this what you do.
 Computer.config(COM1)
