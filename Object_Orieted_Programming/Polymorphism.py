@@ -2,6 +2,7 @@
 ##Four ways of implementaing polymoriphism: Duck Typing, Operator overloading, Method overloading, Method overriding
 ##Duck Typing Example:
 
+#Create class Duck
 class Duck:
     def quack(self):
         return "Quack!"
