@@ -1,13 +1,13 @@
 ###Concept is use din Loose coupling, dependency injection, interfaces
 ##Four ways of implementaing polymoriphism: Duck Typing, Operator overloading, Method overloading, Method overriding
 ##Duck Typing Example:
+
 class Duck:
     def quack(self):
         return "Quack!"
 
     def walk(self):
         return "Waddle waddle!"
-
 class RobotDuck:
     def quack(self):
         return "Beep beep quack!"
