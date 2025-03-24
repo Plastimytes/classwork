@@ -18,8 +18,7 @@
   by Colby Newman
 
   This example code is in the public domain.
-
-  https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
+ https://www.arduino.cc/en/Tutorial/BuiltInExamples/Blink
 */
 
 // the setup function runs once when you press reset or power the board

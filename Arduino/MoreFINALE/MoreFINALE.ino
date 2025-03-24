@@ -10,6 +10,7 @@ const int enableB = 7;     // ENB
 const int led1Pin = 12; // LED 1 (Use a different pin for the LED)
 const int led2Pin = 13; // LED 2 (Use a different pin for the LED)
 
+
 // Define PIR sensor pin
 const int pirPin = 8; // PIR sensor output pin
 
