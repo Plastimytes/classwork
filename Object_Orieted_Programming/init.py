@@ -1,6 +1,6 @@
 ###INTRODUCING VARIABLES (__init__)
 class Computer:
-  def __init__(self, CPU, RAM):#For the arguements
+  def __init__(self, CPU, RAM):#For the arguements.
 
     self.CPU = CPU
     self.RAM = RAM #RAM is an attribute of the class, it's a property of the object. It's a variable that belongs to an object.
