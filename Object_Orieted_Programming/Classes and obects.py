@@ -1,4 +1,5 @@
 ###If you want an object you need to create a class
+
 ##Defining a class
 #In a class you can set your attribute(variables) and behaviour(Functions/methods)
 class Computer:
