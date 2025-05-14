@@ -16,3 +16,9 @@ print()
 #Value modification Meyjod 2
 A[0,1]= A[0,1]+1
 print(A)
+print()
+
+##Slicing
+print(A[:,0])
+print(type(A[:0]))
+
