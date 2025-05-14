@@ -2,3 +2,7 @@ import numpy as np
 
 A =np.array([[1,2],[3,4],[5,6]])
 print(A)
+print()
+
+#Value extraction
+print("a(1,2)=", A[0,1])
