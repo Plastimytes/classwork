@@ -21,4 +21,22 @@ print()
 ##Slicing
 print(A[:,0])
 print(type(A[:0]))
+print()
 
+#Slicing method2
+a=A[:,0]
+print(a)
+print(type(a))
+print()
+
+#Extracting rows
+print(A[1,:])
+print()
+
+#Extracting a 2*2 block from a 3*3 matrix
+B = np.array([[1,2,3], [4,5,6], [7,8,9]])
+
+
+C=B[0:2, 0:2]
+
+print(C)
