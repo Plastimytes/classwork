@@ -6,6 +6,7 @@ print()
 
 #Value extraction
 print("a(1,2)=", A[0,1])
+print()
 
 #Value modification
 A[1,1]=10
