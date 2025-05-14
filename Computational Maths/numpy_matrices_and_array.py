@@ -11,6 +11,7 @@ print()
 #Value modification
 A[1,1]=10
 print(A)
+print()
 
 #Value modification Meyjod 2
 A[0,1]= A[0,1]+1
