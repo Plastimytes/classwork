@@ -4,5 +4,9 @@ import numpy as np
 a=np.array([[1,2,3]])
 print(a.shape)
 
+##Zero matrix
 A= np.zeros((3,4))
 print(A)
+
+#Dimenstionality of a matrix
+print(A.ndim)
