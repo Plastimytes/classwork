@@ -8,5 +8,7 @@ print(a.shape)
 A= np.zeros((3,4))
 print(A)
 
-#Dimenstionality of a matrix
+#Dimenstionality of a matrix(ndim)
 print(A.ndim)
+print(A.size)
+
