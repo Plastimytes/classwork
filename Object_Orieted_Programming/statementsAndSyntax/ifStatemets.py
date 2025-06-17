@@ -5,3 +5,9 @@ elif x == 'bugs':
  print("what's up doc?")
 else:
  print('Run away! Run away!')
+
+x = 10
+while x:
+ x -= 1
+ if x % 2 != 0: continue # Odd? -- skip print
+ print(x, end=' ') 
