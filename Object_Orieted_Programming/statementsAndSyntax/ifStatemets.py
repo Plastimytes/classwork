@@ -6,6 +6,7 @@ elif x == 'bugs':
 else:
  print('Run away! Run away!')
 
+#While loops
 x = 10
 while x:
  x -= 1
