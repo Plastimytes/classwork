@@ -19,7 +19,7 @@ while running:
         if event.type == pygame.QUIT:#If user clicks quit
             running = False
 
-    screen.fill((0,0,0))#Fills screen with a certain color. In this case black
+    screen.fill((255,0,0))#Fills screen with a certain color. In this case black
 
     #Updating the display
     pygame.display.flip() #You acn use pygame.display.update()
