@@ -18,7 +18,7 @@ BLUE = (0, 0, 255)
 
 # Clock for controlling frame rate
 clock = pygame.time.Clock()
-FPS = 60
+FPS = 90
 
 # Character class
 class Character:
