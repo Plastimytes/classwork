@@ -7,5 +7,5 @@ class Person:
         print("Name:",self.name) 
         print("Age:",self.age)
 
-Person1= Person ("John", 30) 
-Person1.get_info()        
+Person1= Person ("John", 30) #Person1 is the object
+Person1.get_info()# This accesses the method get_info in the class        
