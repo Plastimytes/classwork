@@ -4,6 +4,7 @@ class Person:
       self.name=name 
       self.age = age
      def get_info(self): 
+        #Print Statements
         print("Name:",self.name) 
         print("Age:",self.age)
 
