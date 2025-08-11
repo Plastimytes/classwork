@@ -3,7 +3,7 @@ class Person:
      def __init__ (self,name, age):  
       self.name=name 
       self.age = age
-     def get_info(self): 
+     def get_info(self): #This is the method
         #Print Statements
         print("Name:",self.name) 
         print("Age:",self.age)
