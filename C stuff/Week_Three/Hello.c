@@ -1,5 +1,6 @@
 #include <stdio.h>
 
+///Code. start!!!
 void main(){
     printf("Hello world\n");
     printf("Hello Magezi\n");
