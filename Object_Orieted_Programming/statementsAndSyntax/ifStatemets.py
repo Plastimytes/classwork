@@ -4,7 +4,7 @@ if x == 'roger':
 elif x == 'bugs':
  print("what's up doc?")
 else:
- print('Run away! Run away!')
+ print('Run away! Run away!:::::')
 
 #While loops
 x = 10
