@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>CODE SQUAD Task Completion</title>
+    <!-- Import TailwindCSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        
+        .heatmap {
+            display: grid;
+            grid-template-columns: repeat(53, 12px); /* 52 weeks + padding */
+            grid-template-rows: repeat(7, 12px); /* 7 days */
+            gap: 2px;
+            margin: 20px auto;
+            width: fit-content;
+        }
+        .day {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            cursor: pointer;
+        }
+        /* Red color levels for task completion */
+        .completed-0 { background-color: #ebedf0; } /* No tasks */
+        .completed-1 { background-color: #f9d6d5; } /* 1 task - very light red */
+        .completed-2 { background-color: #f28b82; } /* 2-3 tasks - light red */
+        .completed-3 { background-color: #e5534b; } /* 4-6 tasks - medium red */
+        .completed-4 { background-color: #b32a24; } /* 7-10 tasks - dark red */
+        .completed-5 { background-color: #7a0e0a; } /* 11+ tasks - very dark red */
+        /* Tooltip styling */
+        .tooltip {
+            position: absolute;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 4px;
+            font-size: 12px;
+            white-space: nowrap;
+            display: none;
+            z-index: 1000;
+        }
+        /* Responsive adjustments */
+        @media (max-width: 600px) {
+            .heatmap {
+                grid-template-columns: repeat(53, 8px);
+                grid-template-rows: repeat(7, 8px);
+                gap: 1px;
+            }
+            .day {
+                width: 8px;
+                height: 8px;
+            }
+        }
+        /* Legend */
+        .legend {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+        .legend-item {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+            margin: 0 2px;
+        }
+        .legend-label {
+            margin-left: 10px;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+    <div class="container mx-auto px-4 py-8">
+        <h1 class="text-3xl font-bold text-center text-gray-800 mb-4">Task Completion</h1>
+   
+        <!-- Heatmap container -->
+        <div class="relative inline-block">
+            <div id="heatmap" class="heatmap"></div>
+            <!-- Tooltip -->
+            <div id="tooltip" class="tooltip"></div>
+        </div>
+        
+        <!-- Legend -->
+        <div class="legend">
+            <div class="legend-item completed-0"></div>
+            <div class="legend-item completed-1"></div>
+            <div class="legend-item completed-2"></div>
+            <div class="legend-item completed-3"></div>
+            <div class="legend-item completed-4"></div>
+            <div class="legend-item completed-5"></div>
+            <span class="legend-label">Less &mdash; More tasks completed</span>
+        </div>
+    </div>
+
+    <script>
+        // Generate sample data: 365 days of task completions (random 0-15 for variety)
+        function generateTaskData() {
+            const data = [];
+            for (let i = 0; i < 365; i++) {
+                data.push(Math.floor(Math.random() * 16)); // 0 to 15 tasks
+            }
+            return data;
+        }
+
+        const taskData = generateTaskData();
+        
+        // Create the heatmap grid
+        const heatmap = document.getElementById('heatmap');
+        const tooltip = document.getElementById('tooltip');
+        let today = new Date();
+        let dayOfWeek = today.getDay(); // 0 = Sunday, 6 = Saturday
+        let startDate = new Date(today);
+        startDate.setDate(today.getDate() - 364); // Start 364 days ago to fill a full year
+        
+        for (let i = 0; i < 371; i++) { // 371 to cover partial weeks and adjust for starting day
+            const dayDiv = document.createElement('div');
+            dayDiv.classList.add('day');
+            
+            // Calculate the date for this cell
+            const cellDate = new Date(startDate);
+            cellDate.setDate(startDate.getDate() + i);
+            
+            // Determine the task count based on index (simulate past 365 days)
+            let taskCount = 0;
+            if (i >= 7 && taskData[i - 7] !== undefined) {
+                taskCount = taskData[i - 7];
+            }
+            
+            // Assign color class based on task count
+            let level = Math.min(Math.floor(taskCount / 3), 5); // Scale to 0-5 levels
+            dayDiv.classList.add(`completed-${level}`);
+            
+            // Tooltip on hover
+            dayDiv.addEventListener('mouseover', (e) => {
+                tooltip.innerHTML = `${cellDate.toDateString()}: ${taskCount} tasks completed`;
+                tooltip.style.display = 'block';
+                tooltip.style.left = `${e.pageX + 10}px`;
+                tooltip.style.top = `${e.pageY - 30}px`;
+            });
+            dayDiv.addEventListener('mouseout', () => {
+                tooltip.style.display = 'none';
+            });
+            
+            heatmap.appendChild(dayDiv);
+        }
+        
+        // Fill in empty cells at the beginning to align with first column as Sunday
+        const emptyCells = (7 - dayOfWeek) % 7;
+        heatmap.insertAdjacentHTML('afterbegin', '<div class="day opacity-0" style="grid-column-start:1;"></div>'.repeat(emptyCells));
+    </script>
+</body>
+</html>
