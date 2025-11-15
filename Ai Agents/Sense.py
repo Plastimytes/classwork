@@ -1,4 +1,5 @@
 class SimpleAIAgent:
+
     """
     A basic Sense-Process-Act agent.
     """
