@@ -11,6 +11,7 @@ class SimpleAIAgent:
         """
         1. SENSE: Reads the current state of the environment.
         """
+
         print(f"[{self.name}]: Sensing environment... Current state is '{state}'.")
         return state
 
