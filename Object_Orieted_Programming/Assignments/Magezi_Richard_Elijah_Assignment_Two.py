@@ -6,6 +6,7 @@ class Visitor:
       self.reason=Reason
       self.Time_In=Time_In
       self.Time_Out=Time_Out
+
    def info (self):
       print(f"The vistor is {self.name} with an ID number {self.number}. The time they have enetered the hostel is {self.Time_In} and they left at {self.Time_Out}. The reason for their visit: {self.reason}")   
 
