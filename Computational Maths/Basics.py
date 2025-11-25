@@ -15,6 +15,7 @@ divft=x/y
 divfr=x//y
 #Division(Modular)
 divmr=x%y
+
 #Power
 pow=x**y
 
