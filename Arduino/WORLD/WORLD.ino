@@ -1,4 +1,5 @@
 #define LDR A0
+
 #define RED_LED 11
 #define GREEN_LED 13
 #define Buzzer 12
