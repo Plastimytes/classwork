@@ -1,0 +1,466 @@
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Playfair+Display:wght@400;700&display=swap');
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .deck { font-family: 'DM Mono', monospace; padding: 2rem 0; }
+
+  .slide {
+    background: #fff;
+    border: 0.5px solid #000;
+    margin-bottom: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .slide { background: #0a0a0a; border-color: #fff; }
+    .slide-num { color: #444; }
+    .tag { border-color: #fff; color: #fff; }
+    .cmd-block { background: #111; border-color: #333; }
+    .cmd { color: #e0e0e0; }
+    .cmd-comment { color: #555; }
+    .section-label { color: #444; }
+    .divider { border-color: #222; }
+    .note { color: #555; }
+    .cover-title { color: #fff; }
+    .cover-sub { color: #555; }
+    .step-title { color: #fff; }
+    .step-body { color: #888; }
+    .inline-label { color: #555; }
+    .cred-val { color: #ddd; }
+    .cred-key { color: #666; }
+  }
+
+  .slide-inner { padding: 2.5rem 3rem; }
+
+  .slide-num {
+    font-size: 11px;
+    color: #bbb;
+    letter-spacing: 0.1em;
+    position: absolute;
+    top: 1rem;
+    right: 1.5rem;
+  }
+
+  .tag {
+    display: inline-block;
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    border: 0.5px solid #000;
+    padding: 3px 8px;
+    margin-bottom: 1.5rem;
+  }
+
+  .cover-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 48px;
+    font-weight: 700;
+    line-height: 1.05;
+    color: #000;
+    margin-bottom: 0.75rem;
+  }
+
+  .cover-sub {
+    font-size: 11px;
+    color: #888;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+
+  .cover-stack {
+    display: flex;
+    gap: 1rem;
+    margin-top: 2.5rem;
+    flex-wrap: wrap;
+  }
+
+  .stack-pill {
+    font-size: 11px;
+    letter-spacing: 0.05em;
+    padding: 5px 12px;
+    border: 0.5px solid #000;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .stack-pill { border-color: #fff; color: #fff; }
+  }
+
+  .step-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 700;
+    color: #000;
+    margin-bottom: 0.4rem;
+    line-height: 1.2;
+  }
+
+  .step-body {
+    font-size: 12px;
+    color: #777;
+    letter-spacing: 0.02em;
+    margin-bottom: 2rem;
+    line-height: 1.6;
+  }
+
+  .divider {
+    border: none;
+    border-top: 0.5px solid #e0e0e0;
+    margin: 1.5rem 0;
+  }
+
+  .cmd-block {
+    background: #f8f8f8;
+    border: 0.5px solid #ddd;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1rem;
+    font-size: 12px;
+    line-height: 1.8;
+  }
+
+  .cmd { color: #000; }
+  .cmd-comment { color: #aaa; font-style: italic; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .section-label {
+    font-size: 10px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 0.75rem;
+  }
+
+  .note {
+    font-size: 11px;
+    color: #aaa;
+    margin-top: 1rem;
+    line-height: 1.5;
+  }
+
+  .cred-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    padding: 6px 0;
+    border-bottom: 0.5px solid #f0f0f0;
+    font-size: 12px;
+  }
+  .cred-key { color: #aaa; }
+  .cred-val { color: #000; font-weight: 500; }
+
+  @media (prefers-color-scheme: dark) {
+    .cred-row { border-color: #1a1a1a; }
+  }
+
+  .inline-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-top: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .config-block {
+    background: #f8f8f8;
+    border-left: 2px solid #000;
+    padding: 0.75rem 1rem;
+    font-size: 12px;
+    line-height: 1.8;
+    margin-bottom: 0.75rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .config-block { background: #111; border-color: #fff; }
+    .cmd-block { background: #111; border-color: #222; }
+  }
+
+  .done-mark {
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 0.5px solid #000;
+    display: inline-block;
+    margin-top: 1.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .done-mark { border-color: #fff; color: #fff; }
+  }
+
+  .wide-bar {
+    height: 2px;
+    background: #000;
+    margin-bottom: 2.5rem;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .wide-bar { background: #fff; }
+  }
+
+  .final-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+  }
+
+  .final-cell {
+    padding: 1.5rem;
+    border-right: 0.5px solid #e0e0e0;
+    border-bottom: 0.5px solid #e0e0e0;
+  }
+
+  .final-cell:nth-child(2n) { border-right: none; }
+  .final-cell:nth-child(3), .final-cell:nth-child(4) { border-bottom: none; }
+
+  @media (prefers-color-scheme: dark) {
+    .final-cell { border-color: #222; }
+  }
+
+  .final-label {
+    font-size: 10px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #aaa;
+    margin-bottom: 0.4rem;
+  }
+
+  .final-val {
+    font-size: 14px;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .final-val { color: #ddd; }
+  }
+</style>
+
+<div class="deck">
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">00</div>
+      <div class="wide-bar"></div>
+      <div class="tag">Installation Guide</div>
+      <div class="cover-title">LEMP Stack<br>+ WordPress</div>
+      <div class="cover-sub">Ubuntu 22.04 · WSL2 · Local Development</div>
+      <div class="cover-stack">
+        <div class="stack-pill">Nginx</div>
+        <div class="stack-pill">MariaDB</div>
+        <div class="stack-pill">PHP 8.1</div>
+        <div class="stack-pill">WordPress</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">01</div>
+      <div class="tag">System Preparation</div>
+      <div class="step-title">Update the system</div>
+      <div class="step-body">Sync Ubuntu's package manager with the latest software sources before installing anything.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo apt update && sudo apt upgrade -y</div>
+      </div>
+      <p class="note">When prompted for a password, type the one you created at Ubuntu setup. No characters will appear — this is normal.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">02</div>
+      <div class="tag">Web Server</div>
+      <div class="step-title">Install & start Nginx</div>
+      <div class="step-body">Nginx handles all incoming HTTP requests and serves your files to the browser.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo apt install nginx -y</div>
+        <div class="cmd">sudo service nginx start</div>
+      </div>
+      <div class="inline-label">Verify</div>
+      <div class="config-block">Open your Windows browser → <strong>http://localhost</strong><br>You should see: <em>Welcome to nginx!</em></div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">03</div>
+      <div class="tag">Database</div>
+      <div class="step-title">Install & secure MariaDB</div>
+      <div class="step-body">MariaDB is your database server — a drop-in MySQL replacement that stores all WordPress data.</div>
+      <div class="two-col">
+        <div>
+          <div class="section-label">Install & start</div>
+          <div class="cmd-block">
+            <div class="cmd">sudo apt install mariadb-server -y</div>
+            <div class="cmd">sudo service mariadb start</div>
+          </div>
+        </div>
+        <div>
+          <div class="section-label">Secure</div>
+          <div class="cmd-block">
+            <div class="cmd">sudo mysql_secure_installation</div>
+            <div class="cmd-comment"># Press Enter for root pw</div>
+            <div class="cmd-comment"># Set a root password</div>
+            <div class="cmd-comment"># Answer Y to all prompts</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">04</div>
+      <div class="tag">PHP</div>
+      <div class="step-title">Install PHP-FPM</div>
+      <div class="step-body">Nginx doesn't process PHP directly — it passes requests to PHP-FPM, a dedicated process manager.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo apt install php-fpm php-mysql -y</div>
+        <div class="cmd">php -v</div>
+        <div class="cmd-comment"># Note the version (e.g. 8.1)</div>
+        <div class="cmd">sudo service php8.1-fpm start</div>
+        <div class="cmd-comment"># Replace 8.1 with your actual version</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">05</div>
+      <div class="tag">Nginx Configuration</div>
+      <div class="step-title">Link Nginx to PHP</div>
+      <div class="step-body">Edit the Nginx config to enable PHP processing, then test and restart the server.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo nano /etc/nginx/sites-available/default</div>
+      </div>
+      <div class="inline-label">Add / edit these blocks</div>
+      <div class="config-block">
+        index <strong>index.php</strong> index.html index.htm;<br><br>
+        location ~ \.php$ {<br>
+        &nbsp;&nbsp;include snippets/fastcgi-php.conf;<br>
+        &nbsp;&nbsp;fastcgi_pass unix:/var/run/php/php<strong>8.1</strong>-fpm.sock;<br>
+        }
+      </div>
+      <div class="cmd-block">
+        <div class="cmd">sudo nginx -t && sudo service nginx restart</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">06</div>
+      <div class="tag">PHP Test</div>
+      <div class="step-title">Verify PHP is working</div>
+      <div class="step-body">Create a one-line test file to confirm Nginx and PHP-FPM are communicating correctly.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo nano /var/www/html/info.php</div>
+      </div>
+      <div class="inline-label">File contents</div>
+      <div class="config-block">&lt;?php phpinfo(); ?&gt;</div>
+      <div class="inline-label">Verify</div>
+      <div class="config-block">Open your browser → <strong>http://localhost/info.php</strong><br>A large PHP configuration page should load.</div>
+      <p class="note">502 Bad Gateway? Run <code>sudo service php8.1-fpm start</code> and check the socket version in your nginx config matches <code>php -v</code>.</p>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">07</div>
+      <div class="tag">WordPress · Database</div>
+      <div class="step-title">Create the WordPress database</div>
+      <div class="step-body">Provision an isolated database and a dedicated user account before downloading WordPress.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo mysql -u root -p</div>
+      </div>
+      <div class="inline-label">Run inside MariaDB prompt</div>
+      <div class="config-block">
+        CREATE DATABASE wordpress_db;<br>
+        CREATE USER 'wp_user'@'localhost'<br>
+        &nbsp;&nbsp;IDENTIFIED BY '<em>your_secure_password</em>';<br>
+        GRANT ALL PRIVILEGES ON wordpress_db.*<br>
+        &nbsp;&nbsp;TO 'wp_user'@'localhost';<br>
+        FLUSH PRIVILEGES;<br>
+        EXIT;
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">08</div>
+      <div class="tag">WordPress · Files</div>
+      <div class="step-title">Download & deploy WordPress</div>
+      <div class="step-body">Fetch the latest WordPress package and move it into Nginx's public web root.</div>
+      <div class="cmd-block">
+        <div class="cmd">cd /tmp</div>
+        <div class="cmd">wget https://wordpress.org/latest.tar.gz</div>
+        <div class="cmd">tar -xvf latest.tar.gz</div>
+        <div class="cmd">sudo mv wordpress /var/www/html/wordpress</div>
+      </div>
+      <div class="inline-label">Set permissions</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo chown -R www-data:www-data /var/www/html/wordpress</div>
+        <div class="cmd">sudo chmod -R 755 /var/www/html/wordpress</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">09</div>
+      <div class="tag">WordPress · Nginx</div>
+      <div class="step-title">Point Nginx to WordPress</div>
+      <div class="step-body">Update the server config so Nginx serves files from the WordPress directory with clean URL support.</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo nano /etc/nginx/sites-available/default</div>
+      </div>
+      <div class="inline-label">Update root path</div>
+      <div class="config-block">root /var/www/html/wordpress;</div>
+      <div class="inline-label">Update location / block</div>
+      <div class="config-block">location / {<br>&nbsp;&nbsp;try_files $uri $uri/ /index.php?$args;<br>}</div>
+      <div class="cmd-block">
+        <div class="cmd">sudo nginx -t && sudo service nginx restart</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="slide">
+    <div class="slide-inner">
+      <div class="slide-num">10</div>
+      <div class="tag">WordPress · Web Setup</div>
+      <div class="step-title">Complete setup in browser</div>
+      <div class="step-body">Open <strong>http://localhost</strong> in your Windows browser and enter these credentials when prompted.</div>
+      <hr class="divider">
+      <div class="final-grid">
+        <div class="final-cell">
+          <div class="final-label">Database name</div>
+          <div class="final-val">wordpress_db</div>
+        </div>
+        <div class="final-cell">
+          <div class="final-label">Username</div>
+          <div class="final-val">wp_user</div>
+        </div>
+        <div class="final-cell">
+          <div class="final-label">Database host</div>
+          <div class="final-val">localhost</div>
+        </div>
+        <div class="final-cell">
+          <div class="final-label">Table prefix</div>
+          <div class="final-val">wp_</div>
+        </div>
+      </div>
+      <div class="done-mark">Stack complete ✓</div>
+    </div>
+  </div>
+
+</div>
