@@ -1,0 +1,1221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Interact — JS Component Showcase</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:       #f5f2ee;
+      --surface:  #fffefb;
+      --border:   #ddd9d1;
+      --border-strong: #bbb6ac;
+      --text:     #1c1a17;
+      --text-muted: #7a7670;
+      --accent:   #c8502a;
+      --accent-light: #f5e8e3;
+      --accent-hover: #a83e20;
+      --success:  #2e7d52;
+      --success-bg: #e8f5ee;
+      --error:    #b53a2a;
+      --error-bg: #fcecea;
+      --shadow:   0 2px 16px rgba(28,26,23,0.08);
+      --shadow-lg: 0 8px 40px rgba(28,26,23,0.14);
+      --radius:   10px;
+      --mono:     'DM Mono', monospace;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      font-size: 15px;
+      line-height: 1.6;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: sticky; top: 0; z-index: 100;
+      background: rgba(245,242,238,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 2.5rem;
+      display: flex; align-items: center; gap: 0; height: 60px;
+    }
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin-right: auto;
+      color: var(--text);
+      text-decoration: none;
+    }
+    .nav-links { display: flex; gap: 0.25rem; }
+    .nav-link {
+      font-size: 0.82rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      text-decoration: none;
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      transition: background 0.15s, color 0.15s;
+    }
+    .nav-link:hover { background: var(--border); color: var(--text); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: 860px; margin: 0 auto;
+      padding: 6rem 2.5rem 4rem;
+      text-align: center;
+    }
+    .hero-tag {
+      display: inline-block;
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-light);
+      border: 1px solid rgba(200,80,42,0.25);
+      padding: 0.3rem 0.85rem;
+      border-radius: 4px;
+      margin-bottom: 1.6rem;
+    }
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.4rem, 5vw, 3.8rem);
+      font-weight: 600;
+      line-height: 1.15;
+      letter-spacing: -0.01em;
+      color: var(--text);
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 em { font-style: italic; color: var(--accent); }
+    .hero p {
+      font-size: 1.05rem;
+      color: var(--text-muted);
+      max-width: 520px;
+      margin: 0 auto 2.5rem;
+    }
+    .hero-divider {
+      width: 60px; height: 2px;
+      background: var(--accent);
+      margin: 0 auto;
+      border-radius: 2px;
+    }
+
+    /* ── SECTION STRUCTURE ── */
+    .section {
+      max-width: 860px; margin: 0 auto;
+      padding: 4rem 2.5rem;
+      border-top: 1px solid var(--border);
+    }
+    .section-header {
+      display: flex; align-items: baseline; gap: 1rem;
+      margin-bottom: 2.4rem;
+    }
+    .section-num {
+      font-family: var(--mono);
+      font-size: 0.72rem;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      flex-shrink: 0;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.6rem;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+    }
+    .section-desc {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-left: auto;
+      text-align: right;
+      max-width: 220px;
+      line-height: 1.5;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 1.8rem;
+      box-shadow: var(--shadow);
+    }
+
+    /* ════════════════════════════
+       1. DROPDOWN
+    ════════════════════════════ */
+    .dropdown-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; }
+    @media (max-width: 580px) { .dropdown-grid { grid-template-columns: 1fr; } }
+
+    .dropdown-wrap { position: relative; }
+    .dropdown-label {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 0.5rem;
+    }
+    .dropdown-trigger {
+      width: 100%;
+      background: var(--surface);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 0.75rem 1rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      color: var(--text);
+      cursor: pointer;
+      display: flex; align-items: center; justify-content: space-between; gap: 0.5rem;
+      transition: border-color 0.2s, box-shadow 0.2s;
+      text-align: left;
+    }
+    .dropdown-trigger:hover,
+    .dropdown-trigger.open { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(200,80,42,0.1); }
+    .dropdown-arrow {
+      width: 16px; height: 16px;
+      transition: transform 0.25s;
+      flex-shrink: 0; opacity: 0.5;
+    }
+    .dropdown-trigger.open .dropdown-arrow { transform: rotate(180deg); }
+
+    .dropdown-menu {
+      position: absolute; top: calc(100% + 6px); left: 0; right: 0;
+      background: var(--surface);
+      border: 1.5px solid var(--border-strong);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-lg);
+      z-index: 50;
+      overflow: hidden;
+      opacity: 0; transform: translateY(-6px) scaleY(0.96);
+      transform-origin: top;
+      pointer-events: none;
+      transition: opacity 0.18s, transform 0.18s;
+    }
+    .dropdown-menu.open {
+      opacity: 1; transform: translateY(0) scaleY(1);
+      pointer-events: all;
+    }
+    .dropdown-item {
+      padding: 0.7rem 1rem;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex; align-items: center; gap: 0.6rem;
+      border-bottom: 1px solid var(--border);
+      transition: background 0.12s;
+    }
+    .dropdown-item:last-child { border-bottom: none; }
+    .dropdown-item:hover { background: var(--accent-light); }
+    .dropdown-item.selected { color: var(--accent); font-weight: 500; }
+    .dropdown-item.selected::after { content: "✓"; margin-left: auto; font-size: 0.8rem; }
+    .dropdown-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      flex-shrink: 0;
+    }
+    .dropdown-selection-display {
+      margin-top: 1.2rem;
+      padding: 0.9rem 1.1rem;
+      background: var(--bg);
+      border-radius: var(--radius);
+      border: 1px dashed var(--border-strong);
+      font-size: 0.85rem;
+      color: var(--text-muted);
+    }
+    .dropdown-selection-display strong { color: var(--text); font-weight: 500; }
+
+    /* ════════════════════════════
+       2. MODALS
+    ════════════════════════════ */
+    .modal-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; }
+
+    .btn {
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 500;
+      letter-spacing: 0.04em;
+      padding: 0.65rem 1.3rem;
+      border-radius: 8px;
+      border: none; cursor: pointer;
+      transition: all 0.15s;
+      display: inline-flex; align-items: center; gap: 0.45rem;
+    }
+    .btn-primary {
+      background: var(--accent); color: #fff;
+    }
+    .btn-primary:hover { background: var(--accent-hover); transform: translateY(-1px); box-shadow: 0 4px 12px rgba(200,80,42,0.3); }
+    .btn-secondary {
+      background: var(--surface); color: var(--text);
+      border: 1.5px solid var(--border-strong);
+    }
+    .btn-secondary:hover { background: var(--bg); border-color: var(--text); }
+    .btn-ghost {
+      background: transparent; color: var(--text-muted);
+      border: 1.5px solid var(--border);
+    }
+    .btn-ghost:hover { background: var(--bg); color: var(--text); }
+    .btn-sm { font-size: 0.78rem; padding: 0.45rem 0.9rem; }
+    .btn-icon { font-size: 1rem; line-height: 1; }
+
+    /* Modal overlay */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(28,26,23,0.45);
+      backdrop-filter: blur(4px);
+      z-index: 200;
+      display: flex; align-items: center; justify-content: center;
+      padding: 1.5rem;
+      opacity: 0; pointer-events: none;
+      transition: opacity 0.2s;
+    }
+    .modal-overlay.open { opacity: 1; pointer-events: all; }
+
+    .modal {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      box-shadow: var(--shadow-lg);
+      width: 100%; max-width: 480px;
+      transform: translateY(12px) scale(0.98);
+      transition: transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
+    }
+    .modal-overlay.open .modal { transform: translateY(0) scale(1); }
+
+    .modal-header {
+      padding: 1.4rem 1.6rem 0;
+      display: flex; align-items: flex-start; justify-content: space-between;
+    }
+    .modal-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.25rem; font-weight: 600;
+    }
+    .modal-close {
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: 6px; width: 32px; height: 32px;
+      cursor: pointer; display: flex; align-items: center; justify-content: center;
+      font-size: 1.1rem; color: var(--text-muted); flex-shrink: 0;
+      transition: background 0.15s, color 0.15s;
+    }
+    .modal-close:hover { background: var(--error-bg); color: var(--error); border-color: var(--error); }
+    .modal-body { padding: 1rem 1.6rem 0; color: var(--text-muted); font-size: 0.93rem; line-height: 1.65; }
+    .modal-footer {
+      padding: 1.4rem 1.6rem;
+      display: flex; gap: 0.7rem; justify-content: flex-end;
+    }
+    .modal-icon { font-size: 2.2rem; margin-bottom: 0.4rem; display: block; }
+    .modal-divider { height: 1px; background: var(--border); margin: 1rem 0 0; }
+
+    /* ════════════════════════════
+       3. ACCORDION
+    ════════════════════════════ */
+    .accordion { display: flex; flex-direction: column; gap: 0.6rem; }
+    .accordion-item {
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      background: var(--surface);
+      overflow: hidden;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .accordion-item.open {
+      border-color: var(--border-strong);
+      box-shadow: var(--shadow);
+    }
+    .accordion-trigger {
+      width: 100%; background: none; border: none;
+      padding: 1.05rem 1.2rem;
+      display: flex; align-items: center; gap: 0.9rem;
+      cursor: pointer; text-align: left;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.95rem; font-weight: 500; color: var(--text);
+      transition: background 0.15s;
+    }
+    .accordion-trigger:hover { background: var(--bg); }
+    .accordion-item.open .accordion-trigger { background: var(--bg); }
+    .accordion-icon-box {
+      width: 28px; height: 28px; border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.95rem; flex-shrink: 0;
+      transition: background 0.2s;
+    }
+    .accordion-chevron {
+      margin-left: auto; flex-shrink: 0;
+      width: 16px; height: 16px; opacity: 0.45;
+      transition: transform 0.25s, opacity 0.2s;
+    }
+    .accordion-item.open .accordion-chevron { transform: rotate(180deg); opacity: 0.8; }
+    .accordion-body {
+      max-height: 0; overflow: hidden;
+      transition: max-height 0.3s ease;
+    }
+    .accordion-body-inner {
+      padding: 0 1.2rem 1.2rem;
+      font-size: 0.9rem; color: var(--text-muted); line-height: 1.7;
+      border-top: 1px solid var(--border);
+      padding-top: 1rem;
+    }
+    .accordion-body-inner code {
+      font-family: var(--mono);
+      font-size: 0.82rem;
+      background: var(--bg);
+      padding: 0.15em 0.45em;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    /* ════════════════════════════
+       4. FORM
+    ════════════════════════════ */
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+    @media (max-width: 580px) { .form-grid { grid-template-columns: 1fr; } }
+    .form-full { grid-column: 1 / -1; }
+
+    .field { display: flex; flex-direction: column; gap: 0.4rem; }
+    .field-label {
+      font-size: 0.78rem;
+      font-weight: 500;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .field-required { color: var(--accent); }
+    .field-input, .field-select, .field-textarea {
+      width: 100%;
+      background: var(--bg);
+      border: 1.5px solid var(--border);
+      border-radius: 8px;
+      padding: 0.7rem 0.95rem;
+      font-family: 'DM Sans', sans-serif;
+      font-size: 0.93rem;
+      color: var(--text);
+      transition: border-color 0.2s, box-shadow 0.2s, background 0.2s;
+      outline: none;
+      appearance: none;
+    }
+    .field-input::placeholder, .field-textarea::placeholder { color: #bbb6ac; }
+    .field-input:focus, .field-select:focus, .field-textarea:focus {
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(200,80,42,0.1);
+      background: var(--surface);
+    }
+    .field-input.error, .field-select.error, .field-textarea.error {
+      border-color: var(--error);
+      box-shadow: 0 0 0 3px rgba(181,58,42,0.1);
+    }
+    .field-input.valid, .field-select.valid, .field-textarea.valid {
+      border-color: var(--success);
+      box-shadow: 0 0 0 3px rgba(46,125,82,0.08);
+    }
+    .field-textarea { resize: vertical; min-height: 100px; }
+    .field-select-wrap { position: relative; }
+    .field-select-wrap::after {
+      content: "";
+      position: absolute; right: 0.9rem; top: 50%; transform: translateY(-50%);
+      width: 0; height: 0;
+      border-left: 4px solid transparent;
+      border-right: 4px solid transparent;
+      border-top: 5px solid var(--text-muted);
+      pointer-events: none;
+    }
+    .field-hint {
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      display: flex; align-items: center; gap: 0.3rem;
+    }
+    .field-error {
+      font-size: 0.78rem;
+      color: var(--error);
+      display: none;
+      align-items: center; gap: 0.3rem;
+    }
+    .field-error.show { display: flex; }
+    .field-success-msg {
+      font-size: 0.78rem;
+      color: var(--success);
+      display: none; align-items: center; gap: 0.3rem;
+    }
+    .field-success-msg.show { display: flex; }
+
+    /* Password strength */
+    .pw-strength { margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.4rem; }
+    .pw-bars { display: flex; gap: 3px; }
+    .pw-bar {
+      height: 3px; flex: 1; border-radius: 2px;
+      background: var(--border);
+      transition: background 0.25s;
+    }
+    .pw-bar.weak { background: var(--error); }
+    .pw-bar.fair { background: #d48a2a; }
+    .pw-bar.good { background: #5a9a60; }
+    .pw-bar.strong { background: var(--success); }
+    .pw-label { font-size: 0.75rem; color: var(--text-muted); }
+
+    /* Checkbox */
+    .field-check {
+      display: flex; align-items: flex-start; gap: 0.7rem;
+      cursor: pointer;
+    }
+    .field-check input[type="checkbox"] {
+      appearance: none;
+      width: 18px; height: 18px;
+      border: 1.5px solid var(--border-strong);
+      border-radius: 4px;
+      background: var(--surface);
+      cursor: pointer; flex-shrink: 0; margin-top: 1px;
+      transition: all 0.15s; position: relative;
+    }
+    .field-check input[type="checkbox"]:checked {
+      background: var(--accent); border-color: var(--accent);
+    }
+    .field-check input[type="checkbox"]:checked::after {
+      content: "✓"; position: absolute;
+      top: 50%; left: 50%; transform: translate(-50%,-50%);
+      color: white; font-size: 0.7rem; font-weight: 700;
+    }
+    .check-label { font-size: 0.88rem; color: var(--text-muted); line-height: 1.5; }
+    .check-label a { color: var(--accent); text-decoration: none; }
+    .check-label a:hover { text-decoration: underline; }
+
+    .form-footer {
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 1rem; flex-wrap: wrap;
+    }
+    .form-footer-note { font-size: 0.8rem; color: var(--text-muted); display: flex; align-items: center; gap: 0.35rem; }
+    #form-success {
+      display: none;
+      background: var(--success-bg);
+      border: 1.5px solid rgba(46,125,82,0.3);
+      border-radius: var(--radius);
+      padding: 1.2rem 1.4rem;
+      margin-top: 1.2rem;
+    }
+    #form-success.show { display: flex; align-items: flex-start; gap: 0.8rem; }
+    #form-success-icon { font-size: 1.4rem; flex-shrink: 0; }
+    #form-success-text h4 { font-size: 0.95rem; font-weight: 500; color: var(--success); margin-bottom: 0.2rem; }
+    #form-success-text p { font-size: 0.85rem; color: var(--text-muted); }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 2rem 2.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1rem;
+      max-width: 860px; margin: 0 auto;
+    }
+    .footer-logo { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 600; }
+    .footer-note { font-size: 0.8rem; color: var(--text-muted); font-family: var(--mono); }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity 0.5s ease, transform 0.5s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Interact.</a>
+  <div class="nav-links">
+    <a href="#dropdowns" class="nav-link">Dropdowns</a>
+    <a href="#modals" class="nav-link">Modals</a>
+    <a href="#accordion" class="nav-link">Accordion</a>
+    <a href="#form" class="nav-link">Form</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero reveal">
+  <span class="hero-tag">JS Demo Showcase</span>
+  <h1>Interactive <em>components</em>,<br>built from scratch.</h1>
+  <p>Four patterns — dropdowns, modals, accordions, and validated forms — hand-crafted in vanilla JavaScript with no libraries.</p>
+  <div class="hero-divider"></div>
+</div>
+
+<!-- ── SECTION 1: DROPDOWNS ── -->
+<section class="section reveal" id="dropdowns">
+  <div class="section-header">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Dropdown Menus</h2>
+    <span class="section-desc">Click to open. Press Escape or click outside to close.</span>
+  </div>
+
+  <div class="card">
+    <div class="dropdown-grid">
+
+      <!-- Dropdown A -->
+      <div class="dropdown-wrap" data-dropdown="a">
+        <span class="dropdown-label">Select a Framework</span>
+        <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dropdown-value">Choose one…</span>
+          <svg class="dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6l4 4 4-4"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu" role="listbox">
+          <div class="dropdown-item" data-value="React" role="option">
+            <span class="dropdown-dot" style="background:#61dafb"></span> React
+          </div>
+          <div class="dropdown-item" data-value="Vue" role="option">
+            <span class="dropdown-dot" style="background:#42b883"></span> Vue
+          </div>
+          <div class="dropdown-item" data-value="Svelte" role="option">
+            <span class="dropdown-dot" style="background:#ff3e00"></span> Svelte
+          </div>
+          <div class="dropdown-item" data-value="Angular" role="option">
+            <span class="dropdown-dot" style="background:#dd0031"></span> Angular
+          </div>
+          <div class="dropdown-item" data-value="Solid" role="option">
+            <span class="dropdown-dot" style="background:#446b9e"></span> Solid
+          </div>
+        </div>
+      </div>
+
+      <!-- Dropdown B -->
+      <div class="dropdown-wrap" data-dropdown="b">
+        <span class="dropdown-label">Select a Theme</span>
+        <button class="dropdown-trigger" aria-haspopup="listbox" aria-expanded="false">
+          <span class="dropdown-value">Choose one…</span>
+          <svg class="dropdown-arrow" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M4 6l4 4 4-4"/>
+          </svg>
+        </button>
+        <div class="dropdown-menu" role="listbox">
+          <div class="dropdown-item" data-value="Light" role="option">
+            <span class="dropdown-dot" style="background:#f5f2ee;border:1px solid #ccc"></span> Light
+          </div>
+          <div class="dropdown-item" data-value="Dark" role="option">
+            <span class="dropdown-dot" style="background:#1c1a17"></span> Dark
+          </div>
+          <div class="dropdown-item" data-value="Sepia" role="option">
+            <span class="dropdown-dot" style="background:#c8a86b"></span> Sepia
+          </div>
+          <div class="dropdown-item" data-value="High Contrast" role="option">
+            <span class="dropdown-dot" style="background:#000;border:2px solid #fff"></span> High Contrast
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="dropdown-selection-display" id="dropdown-output">
+      Selections will appear here once you choose from the dropdowns above.
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 2: MODALS ── -->
+<section class="section reveal" id="modals">
+  <div class="section-header">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Modal Dialogs</h2>
+    <span class="section-desc">Click a button to open. Close with ✕, backdrop, or Escape.</span>
+  </div>
+
+  <div class="card">
+    <div class="modal-buttons">
+      <button class="btn btn-primary" onclick="openModal('modal-info')">
+        <span class="btn-icon">ℹ️</span> Info Modal
+      </button>
+      <button class="btn btn-secondary" onclick="openModal('modal-confirm')">
+        <span class="btn-icon">⚠️</span> Confirm Action
+      </button>
+      <button class="btn btn-ghost" onclick="openModal('modal-image')">
+        <span class="btn-icon">🖼️</span> Image Preview
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- Modal: Info -->
+<div class="modal-overlay" id="modal-info" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">About This Demo</h3>
+      <button class="modal-close" onclick="closeModal('modal-info')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <p>This modal is built with pure vanilla JavaScript — no libraries, no frameworks. It supports:</p>
+      <ul style="margin-top:0.8rem;padding-left:1.2rem;display:flex;flex-direction:column;gap:0.3rem;">
+        <li>Keyboard navigation (<code style="font-family:var(--mono);font-size:0.82rem;background:var(--bg);padding:0.1em 0.4em;border-radius:3px">Escape</code> to close)</li>
+        <li>Backdrop click to dismiss</li>
+        <li>CSS spring animation on entry</li>
+        <li>Focus trap inside dialog</li>
+      </ul>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-footer">
+      <button class="btn btn-primary btn-sm" onclick="closeModal('modal-info')">Got it</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Confirm -->
+<div class="modal-overlay" id="modal-confirm" role="dialog" aria-modal="true">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 class="modal-title">Confirm Deletion</h3>
+      <button class="modal-close" onclick="closeModal('modal-confirm')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body">
+      <span class="modal-icon">🗑️</span>
+      <p>You're about to permanently delete <strong>project-alpha.zip</strong>. This action <strong>cannot be undone</strong>.</p>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-footer">
+      <button class="btn btn-ghost btn-sm" onclick="closeModal('modal-confirm')">Cancel</button>
+      <button class="btn btn-sm" style="background:var(--error);color:#fff;" onclick="confirmDelete()">Delete File</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modal: Image -->
+<div class="modal-overlay" id="modal-image" role="dialog" aria-modal="true">
+  <div class="modal" style="max-width:560px">
+    <div class="modal-header">
+      <h3 class="modal-title">Preview</h3>
+      <button class="modal-close" onclick="closeModal('modal-image')" aria-label="Close">✕</button>
+    </div>
+    <div class="modal-body" style="padding-bottom:1rem">
+      <div style="background:var(--bg);border-radius:8px;aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;color:var(--border-strong);font-size:0.85rem;border:1px dashed var(--border-strong);margin-top:0.5rem;font-family:var(--mono)">
+        [ image placeholder ]
+      </div>
+      <p style="margin-top:0.8rem;font-size:0.82rem">landscape-001.jpg — 4.2 MB — 4096 × 2304 px</p>
+    </div>
+    <div class="modal-divider"></div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary btn-sm" onclick="closeModal('modal-image')">Close</button>
+      <button class="btn btn-primary btn-sm">⬇ Download</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── SECTION 3: ACCORDION ── -->
+<section class="section reveal" id="accordion">
+  <div class="section-header">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Accordion</h2>
+    <span class="section-desc">One panel open at a time. Smooth height animation.</span>
+  </div>
+
+  <div class="card">
+    <div class="accordion" id="main-accordion">
+
+      <div class="accordion-item" data-accordion-item>
+        <button class="accordion-trigger" data-accordion-trigger aria-expanded="false">
+          <span class="accordion-icon-box" style="background:#fef3ec;color:#c8502a">🧩</span>
+          What is event delegation?
+          <svg class="accordion-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body" data-accordion-body>
+          <div class="accordion-body-inner">
+            Event delegation is a technique where you attach a single event listener to a parent element rather than individual children. When a child fires an event, it <em>bubbles up</em> to the parent, which handles it using <code>event.target</code>. This improves performance and works for dynamically added elements.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-accordion-item>
+        <button class="accordion-trigger" data-accordion-trigger aria-expanded="false">
+          <span class="accordion-icon-box" style="background:#eef5ea;color:#2e7d52">🔁</span>
+          How does the event loop work?
+          <svg class="accordion-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body" data-accordion-body>
+          <div class="accordion-body-inner">
+            JavaScript is single-threaded. The event loop monitors the <strong>call stack</strong> and the <strong>task queue</strong>. When the stack is empty, it dequeues the next task. Microtasks (like <code>Promise</code> callbacks) always run before macrotasks (like <code>setTimeout</code>), giving JS its async-without-blocking character.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-accordion-item>
+        <button class="accordion-trigger" data-accordion-trigger aria-expanded="false">
+          <span class="accordion-icon-box" style="background:#eef0f8;color:#3a5fa8">🔒</span>
+          What is closure in JavaScript?
+          <svg class="accordion-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body" data-accordion-body>
+          <div class="accordion-body-inner">
+            A closure is a function that retains access to variables from its <em>outer lexical scope</em> even after that scope has finished executing. It's how JavaScript enables data encapsulation and factory patterns. Every <code>function</code> in JS creates a closure over its surrounding context.
+          </div>
+        </div>
+      </div>
+
+      <div class="accordion-item" data-accordion-item>
+        <button class="accordion-trigger" data-accordion-trigger aria-expanded="false">
+          <span class="accordion-icon-box" style="background:#fdf0f5;color:#9c3a6a">📦</span>
+          What's the difference between <code style="font-size:0.85rem">==</code> and <code style="font-size:0.85rem">===</code>?
+          <svg class="accordion-chevron" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 6l4 4 4-4"/></svg>
+        </button>
+        <div class="accordion-body" data-accordion-body>
+          <div class="accordion-body-inner">
+            <code>==</code> is the <em>loose equality</em> operator — it performs type coercion before comparison (<code>"1" == 1</code> is <code>true</code>). <code>===</code> is <em>strict equality</em> — it checks both value and type without coercion (<code>"1" === 1</code> is <code>false</code>). Always prefer <code>===</code> unless you explicitly need coercion.
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ── SECTION 4: FORM ── -->
+<section class="section reveal" id="form">
+  <div class="section-header">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Form Validation</h2>
+    <span class="section-desc">Live validation with error messages and password strength.</span>
+  </div>
+
+  <div class="card">
+    <form id="signup-form" novalidate autocomplete="off">
+      <div class="form-grid">
+
+        <!-- First name -->
+        <div class="field">
+          <label class="field-label" for="fname">First Name <span class="field-required">*</span></label>
+          <input class="field-input" id="fname" name="fname" type="text" placeholder="Ada" />
+          <span class="field-error" id="fname-error">⚑ Please enter your first name.</span>
+        </div>
+
+        <!-- Last name -->
+        <div class="field">
+          <label class="field-label" for="lname">Last Name <span class="field-required">*</span></label>
+          <input class="field-input" id="lname" name="lname" type="text" placeholder="Lovelace" />
+          <span class="field-error" id="lname-error">⚑ Please enter your last name.</span>
+        </div>
+
+        <!-- Email -->
+        <div class="field form-full">
+          <label class="field-label" for="email">Email Address <span class="field-required">*</span></label>
+          <input class="field-input" id="email" name="email" type="email" placeholder="ada@example.com" />
+          <span class="field-error" id="email-error">⚑ Please enter a valid email address.</span>
+          <span class="field-success-msg" id="email-ok">✓ Looks good!</span>
+        </div>
+
+        <!-- Role select -->
+        <div class="field">
+          <label class="field-label" for="role">Role <span class="field-required">*</span></label>
+          <div class="field-select-wrap">
+            <select class="field-input field-select" id="role" name="role">
+              <option value="">Select a role…</option>
+              <option>Frontend Developer</option>
+              <option>Backend Developer</option>
+              <option>Full-Stack Developer</option>
+              <option>Designer</option>
+              <option>Product Manager</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <span class="field-error" id="role-error">⚑ Please select a role.</span>
+        </div>
+
+        <!-- Experience -->
+        <div class="field">
+          <label class="field-label" for="experience">Experience</label>
+          <div class="field-select-wrap">
+            <select class="field-input field-select" id="experience" name="experience">
+              <option value="">Select level…</option>
+              <option>Junior (0–2 yrs)</option>
+              <option>Mid (2–5 yrs)</option>
+              <option>Senior (5–10 yrs)</option>
+              <option>Lead (10+ yrs)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Password -->
+        <div class="field form-full">
+          <label class="field-label" for="password">Password <span class="field-required">*</span></label>
+          <input class="field-input" id="password" name="password" type="password" placeholder="At least 8 characters" />
+          <div class="pw-strength" id="pw-strength" style="display:none">
+            <div class="pw-bars">
+              <div class="pw-bar" id="bar1"></div>
+              <div class="pw-bar" id="bar2"></div>
+              <div class="pw-bar" id="bar3"></div>
+              <div class="pw-bar" id="bar4"></div>
+            </div>
+            <span class="pw-label" id="pw-label">Enter a password</span>
+          </div>
+          <span class="field-error" id="pw-error">⚑ Password must be at least 8 characters.</span>
+        </div>
+
+        <!-- Bio -->
+        <div class="field form-full">
+          <label class="field-label" for="bio">Short Bio</label>
+          <textarea class="field-textarea" id="bio" name="bio" placeholder="Tell us a bit about yourself…" maxlength="300"></textarea>
+          <span class="field-hint"><span id="bio-count">0</span>/300 characters</span>
+        </div>
+
+        <!-- Terms -->
+        <div class="field form-full">
+          <label class="field-check">
+            <input type="checkbox" id="terms" name="terms" />
+            <span class="check-label">I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a> <span class="field-required">*</span></span>
+          </label>
+          <span class="field-error" id="terms-error">⚑ You must accept the terms to continue.</span>
+        </div>
+
+      </div>
+
+      <div class="modal-divider" style="margin: 1.4rem 0 1.2rem"></div>
+
+      <div class="form-footer">
+        <span class="form-footer-note">🔒 Your data is never shared.</span>
+        <div style="display:flex;gap:0.7rem">
+          <button type="button" class="btn btn-ghost" onclick="resetForm()">Reset</button>
+          <button type="submit" class="btn btn-primary" id="submit-btn">Create Account →</button>
+        </div>
+      </div>
+
+      <div id="form-success">
+        <span id="form-success-icon">🎉</span>
+        <div id="form-success-text">
+          <h4>Account created successfully!</h4>
+          <p>Welcome aboard. Check your inbox for a confirmation email.</p>
+        </div>
+      </div>
+    </form>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <span class="footer-logo">Interact.</span>
+  <span class="footer-note">vanilla js · no dependencies</span>
+</footer>
+
+
+<script>
+/* ══════════════════════════════════════
+   SCROLL REVEAL
+══════════════════════════════════════ */
+const revealObserver = new IntersectionObserver((entries) => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('visible'); }
+  });
+}, { threshold: 0.08 });
+
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+
+/* ══════════════════════════════════════
+   DROPDOWNS
+══════════════════════════════════════ */
+const selections = { a: null, b: null };
+
+function updateDropdownOutput() {
+  const out = document.getElementById('dropdown-output');
+  const { a, b } = selections;
+  if (!a && !b) {
+    out.innerHTML = 'Selections will appear here once you choose from the dropdowns above.';
+    return;
+  }
+  const parts = [];
+  if (a) parts.push(`<strong>Framework:</strong> ${a}`);
+  if (b) parts.push(`<strong>Theme:</strong> ${b}`);
+  out.innerHTML = '✓ ' + parts.join('  ·  ');
+}
+
+document.querySelectorAll('[data-dropdown]').forEach(wrap => {
+  const key      = wrap.dataset.dropdown;
+  const trigger  = wrap.querySelector('.dropdown-trigger');
+  const menu     = wrap.querySelector('.dropdown-menu');
+  const valueEl  = wrap.querySelector('.dropdown-value');
+  const items    = wrap.querySelectorAll('.dropdown-item');
+
+  function openDropdown() {
+    closeAllDropdowns();
+    trigger.classList.add('open');
+    menu.classList.add('open');
+    trigger.setAttribute('aria-expanded', 'true');
+  }
+  function closeDropdown() {
+    trigger.classList.remove('open');
+    menu.classList.remove('open');
+    trigger.setAttribute('aria-expanded', 'false');
+  }
+
+  trigger.addEventListener('click', (e) => {
+    e.stopPropagation();
+    trigger.classList.contains('open') ? closeDropdown() : openDropdown();
+  });
+
+  items.forEach(item => {
+    item.addEventListener('click', () => {
+      const val = item.dataset.value;
+      selections[key] = val;
+      valueEl.textContent = val;
+      items.forEach(i => i.classList.remove('selected'));
+      item.classList.add('selected');
+      closeDropdown();
+      updateDropdownOutput();
+    });
+  });
+
+  // keyboard nav inside menu
+  trigger.addEventListener('keydown', e => {
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openDropdown(); }
+    if (e.key === 'Escape') closeDropdown();
+  });
+});
+
+function closeAllDropdowns() {
+  document.querySelectorAll('[data-dropdown]').forEach(wrap => {
+    wrap.querySelector('.dropdown-trigger').classList.remove('open');
+    wrap.querySelector('.dropdown-menu').classList.remove('open');
+    wrap.querySelector('.dropdown-trigger').setAttribute('aria-expanded', 'false');
+  });
+}
+
+document.addEventListener('click', closeAllDropdowns);
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllDropdowns(); });
+
+
+/* ══════════════════════════════════════
+   MODALS
+══════════════════════════════════════ */
+function openModal(id) {
+  const overlay = document.getElementById(id);
+  overlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+  // focus first focusable element
+  const focusable = overlay.querySelectorAll('button, [href], input, select, textarea');
+  if (focusable.length) focusable[0].focus();
+}
+
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+// Close on backdrop click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', (e) => {
+    if (e.target === overlay) closeModal(overlay.id);
+  });
+});
+
+// Escape key
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    document.querySelectorAll('.modal-overlay.open').forEach(o => closeModal(o.id));
+  }
+});
+
+function confirmDelete() {
+  closeModal('modal-confirm');
+  // small toast feedback
+  const toast = document.createElement('div');
+  toast.textContent = '🗑 File deleted.';
+  Object.assign(toast.style, {
+    position:'fixed', bottom:'1.5rem', right:'1.5rem', zIndex:'999',
+    background:'var(--text)', color:'#fff', padding:'0.65rem 1.2rem',
+    borderRadius:'8px', fontSize:'0.88rem', boxShadow:'var(--shadow-lg)',
+    opacity:'0', transition:'opacity 0.2s', fontFamily:"'DM Sans',sans-serif"
+  });
+  document.body.appendChild(toast);
+  requestAnimationFrame(() => { toast.style.opacity = '1'; });
+  setTimeout(() => {
+    toast.style.opacity = '0';
+    setTimeout(() => toast.remove(), 300);
+  }, 2800);
+}
+
+
+/* ══════════════════════════════════════
+   ACCORDION (one-open-at-a-time)
+══════════════════════════════════════ */
+const accordionItems = document.querySelectorAll('[data-accordion-item]');
+
+accordionItems.forEach(item => {
+  const trigger = item.querySelector('[data-accordion-trigger]');
+  const body    = item.querySelector('[data-accordion-body]');
+
+  trigger.addEventListener('click', () => {
+    const isOpen = item.classList.contains('open');
+
+    // Close all
+    accordionItems.forEach(i => {
+      i.classList.remove('open');
+      i.querySelector('[data-accordion-trigger]').setAttribute('aria-expanded','false');
+      i.querySelector('[data-accordion-body]').style.maxHeight = '0';
+    });
+
+    // Open clicked (if it was closed)
+    if (!isOpen) {
+      item.classList.add('open');
+      trigger.setAttribute('aria-expanded', 'true');
+      body.style.maxHeight = body.scrollHeight + 'px';
+    }
+  });
+});
+
+
+/* ══════════════════════════════════════
+   FORM VALIDATION
+══════════════════════════════════════ */
+const form = document.getElementById('signup-form');
+
+// Helpers
+function setError(fieldId, errorId) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errorId);
+  f.classList.remove('valid'); f.classList.add('error');
+  e.classList.add('show');
+  const ok = document.getElementById(fieldId + '-ok');
+  if (ok) ok.classList.remove('show');
+  return false;
+}
+function setValid(fieldId, errorId) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errorId);
+  f.classList.remove('error'); f.classList.add('valid');
+  e.classList.remove('show');
+  const ok = document.getElementById(fieldId + '-ok');
+  if (ok) ok.classList.add('show');
+  return true;
+}
+function clearState(fieldId, errorId) {
+  const f = document.getElementById(fieldId);
+  const e = document.getElementById(errorId);
+  f.classList.remove('error','valid');
+  e.classList.remove('show');
+  const ok = document.getElementById(fieldId + '-ok');
+  if (ok) ok.classList.remove('show');
+}
+
+// Field validators
+function validateName(id, errorId) {
+  const v = document.getElementById(id).value.trim();
+  if (v.length < 2) return setError(id, errorId);
+  return setValid(id, errorId);
+}
+function validateEmail() {
+  const v = document.getElementById('email').value.trim();
+  const ok = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+  if (!ok) return setError('email','email-error');
+  return setValid('email','email-error');
+}
+function validateSelect(id, errorId) {
+  const v = document.getElementById(id).value;
+  if (!v) return setError(id, errorId);
+  return setValid(id, errorId);
+}
+function validatePassword() {
+  const v = document.getElementById('password').value;
+  if (v.length < 8) return setError('password','pw-error');
+  document.getElementById('pw-error').classList.remove('show');
+  document.getElementById('password').classList.remove('error');
+  document.getElementById('password').classList.add('valid');
+  return true;
+}
+function validateTerms() {
+  const checked = document.getElementById('terms').checked;
+  const err = document.getElementById('terms-error');
+  if (!checked) { err.classList.add('show'); return false; }
+  err.classList.remove('show'); return true;
+}
+
+// Live validation on blur
+document.getElementById('fname').addEventListener('blur', () => validateName('fname','fname-error'));
+document.getElementById('lname').addEventListener('blur', () => validateName('lname','lname-error'));
+document.getElementById('email').addEventListener('blur', validateEmail);
+document.getElementById('email').addEventListener('input', () => {
+  if (document.getElementById('email').classList.contains('error')) validateEmail();
+});
+document.getElementById('role').addEventListener('change', () => validateSelect('role','role-error'));
+document.getElementById('password').addEventListener('input', () => {
+  updatePasswordStrength();
+  if (document.getElementById('password').classList.contains('error')) validatePassword();
+});
+document.getElementById('password').addEventListener('blur', validatePassword);
+
+// Bio character counter
+document.getElementById('bio').addEventListener('input', function() {
+  document.getElementById('bio-count').textContent = this.value.length;
+});
+
+// Password strength
+function updatePasswordStrength() {
+  const pw = document.getElementById('password').value;
+  const strengthEl = document.getElementById('pw-strength');
+  const labelEl = document.getElementById('pw-label');
+  const bars = [document.getElementById('bar1'), document.getElementById('bar2'),
+                document.getElementById('bar3'), document.getElementById('bar4')];
+
+  if (!pw.length) { strengthEl.style.display = 'none'; return; }
+  strengthEl.style.display = 'flex';
+
+  let score = 0;
+  if (pw.length >= 8)  score++;
+  if (pw.length >= 12) score++;
+  if (/[A-Z]/.test(pw) && /[a-z]/.test(pw)) score++;
+  if (/[0-9]/.test(pw)) score++;
+  if (/[^A-Za-z0-9]/.test(pw)) score++;
+  score = Math.min(score, 4);
+
+  const levels = ['','weak','fair','good','strong'];
+  const labels = ['','Weak','Fair','Good','Strong 💪'];
+
+  bars.forEach((b, i) => {
+    b.className = 'pw-bar';
+    if (i < score) b.classList.add(levels[score]);
+  });
+  labelEl.textContent = 'Strength: ' + (labels[score] || '');
+}
+
+// Submit
+form.addEventListener('submit', (e) => {
+  e.preventDefault();
+  const ok = [
+    validateName('fname','fname-error'),
+    validateName('lname','lname-error'),
+    validateEmail(),
+    validateSelect('role','role-error'),
+    validatePassword(),
+    validateTerms()
+  ].every(Boolean);
+
+  if (ok) {
+    document.getElementById('submit-btn').disabled = true;
+    document.getElementById('submit-btn').textContent = 'Creating…';
+    setTimeout(() => {
+      document.getElementById('form-success').classList.add('show');
+      document.getElementById('submit-btn').textContent = '✓ Done';
+      document.getElementById('form-success').scrollIntoView({ behavior:'smooth', block:'nearest' });
+    }, 900);
+  } else {
+    // Scroll to first error
+    const firstError = form.querySelector('.field-input.error, .field-select.error');
+    if (firstError) firstError.scrollIntoView({ behavior:'smooth', block:'center' });
+  }
+});
+
+function resetForm() {
+  form.reset();
+  document.getElementById('form-success').classList.remove('show');
+  document.getElementById('submit-btn').disabled = false;
+  document.getElementById('submit-btn').textContent = 'Create Account →';
+  document.getElementById('bio-count').textContent = '0';
+  document.getElementById('pw-strength').style.display = 'none';
+  ['fname','lname','email','role','password'].forEach(id => {
+    const el = document.getElementById(id);
+    el.classList.remove('error','valid');
+  });
+  document.querySelectorAll('.field-error, .field-success-msg').forEach(e => e.classList.remove('show'));
+}
+</script>
+
+</body>
+</html>
