@@ -1,5 +1,4 @@
 #include <stdio.h>
-
 //Declaring multiple variables
 
 int main(void){
